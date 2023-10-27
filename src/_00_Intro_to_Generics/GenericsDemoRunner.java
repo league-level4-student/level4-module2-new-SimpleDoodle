@@ -12,7 +12,7 @@ public class GenericsDemoRunner {
         GenericsDemo<String> g1 = new GenericsDemo<String>();
         g1.setThing("Hello");
         System.out.println(g1.getThing());
-
+        
         // Defined to be Integer
         GenericsDemo<Integer> g2 = new GenericsDemo<Integer>();
         g2.setThing(123);
