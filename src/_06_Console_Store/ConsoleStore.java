@@ -41,7 +41,8 @@ public class ConsoleStore {
 	 * a receipt showing their name, the individual prices of the items and their
 	 * total.
 	 */
-	static String continueShop;
+	static String checkOut;
+	static boolean overflow = false;
 
 	public static void main(String[] args) {
 		int wallet = 740;
@@ -67,12 +68,38 @@ public class ConsoleStore {
 					games.add(new Toy());
 				}
 			}
-			System.out.println("Would you like to remove an item from your cart? Y/N?");
-			String removeItem = purchaseTracker.next();
+			if (consoleCart.length() > 0 || games.length() > 0 || overflow == true) {
+				System.out.println("Would you like to remove an item from your cart? Y/N?");
+				String removeItem = purchaseTracker.next();
+				if (removeItem.equalsIgnoreCase("Y")) {
+					System.out.println("Would you like to remove a console or a game?");
+					String removal = purchaseTracker.next();
+					System.out.println("How many " + removal + "s would you like to remove?");
+					int removeAmount = purchaseTracker.nextInt();
+					if (removal.equalsIgnoreCase("console")) {
+						wallet += (removeAmount * 500);
+						for (int i = 0; i < removeAmount; i++) {
+							consoleCart.remove(new Clothing());
+						}
+					} else if (removal.equalsIgnoreCase("game")) {
+						wallet += (removeAmount * 60);
+						for (int i = 0; i < removeAmount; i++) {
+							games.remove(new Toy());
+						}
+					}
+				}
+			}
 			System.out.println("Would you like to check out? Y/N?");
-			String continueShop = purchaseTracker.next();
-			continueShop = wallet < 0 ? "N" : "Y";
-		} while (wallet >= 60 && continueShop.equalsIgnoreCase("N"));
+			checkOut = purchaseTracker.next();
+			if (wallet < 0 && checkOut.equalsIgnoreCase("Y")) {
+				System.out.println("You don't have enough funds to purchase all items. Please remove some items.");
+				overflow = true;
+				checkOut = "N";
+			}
+			// checkOut = wallet < 0 ? "Y" : "N";
+			// System.out.println(checkOut);
+
+		} while (checkOut.equalsIgnoreCase("N"));
 		purchaseTracker.close();
 		System.out.println("You have $" + wallet + " remaining");
 		consoleCart.showCart();
