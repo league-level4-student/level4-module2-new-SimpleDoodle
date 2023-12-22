@@ -7,10 +7,10 @@ import javax.swing.JLabel;
 public class Clothing extends NonFood{
 	public Clothing() {
 		if(new Random().nextBoolean()) {
-			this.item = "clothing1.jpeg";
+			this.item = "playstation.png";
 		}
 		else {
-			this.item = "clothing2.jpeg";
+			this.item = "xbox.png";
 		}
 	}
 

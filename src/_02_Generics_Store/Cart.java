@@ -31,11 +31,10 @@ public class Cart<T extends NonFood> {
                 "Your cart is full!\nNo more than 5 items");
     }
     
-    public void remove(T item) {
-    	for (int i = 0; i < cart.length; i++) {
+    public void remove(T item, int removal) {
+    	for (int i = 0; i < removal; i++) {
 			if(cart[i] != null && cart[i].item.equals(item.item)) {
 				cart[i] = null;
-				break;
 			}
 		}
     }
@@ -49,12 +48,11 @@ public class Cart<T extends NonFood> {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         for (int i = 0; i < cart.length; i++) {
-            if (cart[i] != null) {
+if (cart[i] != null) {
                 panel.add(cart[i].getNonFood());
             }
         }
         frame.pack();
-
     }
 
     public int length() {

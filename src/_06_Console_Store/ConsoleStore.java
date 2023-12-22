@@ -51,22 +51,34 @@ public class ConsoleStore {
 		Cart<Toy> games = new Cart<Toy>();
 		System.out.println("What is your name?");
 		String name = purchaseTracker.next();
+		int consolesBuy = 0;
+		int gamesBuy = 0;
+		System.out.println("You have $" + wallet);
 		do {
-			System.out.println("You currently have $" + wallet);
 			System.out.println("A console is $500 and a game is $60, what would you like to purchase?");
 			String purchase = purchaseTracker.next();
 			System.out.println("How many " + purchase + "s would you like to purchase?");
 			int amount = purchaseTracker.nextInt();
 			if (purchase.equalsIgnoreCase("console")) {
 				wallet -= (amount * 500);
+				consolesBuy += amount;
 				for (int i = 0; i < amount; i++) {
 					consoleCart.add(new Clothing());
 				}
 			} else if (purchase.equalsIgnoreCase("game")) {
 				wallet -= (amount * 60);
+				gamesBuy += amount;
 				for (int i = 0; i < amount; i++) {
 					games.add(new Toy());
 				}
+			}
+			System.out.println("Would you like to view your cart? Y/N?");
+			String checkItem = purchaseTracker.next();
+			if (checkItem.equalsIgnoreCase("y")) {
+				System.out.println("You have " + consolesBuy + " console(s)");
+				System.out.println("You have " + gamesBuy + " game(s)");
+				System.out.println("The total cost of these items is $" + (gamesBuy * 60 + consolesBuy * 500)
+						+ ". Keep in mind that you have a total of $740");
 			}
 			if (consoleCart.length() > 0 || games.length() > 0 || overflow == true) {
 				System.out.println("Would you like to remove an item from your cart? Y/N?");
@@ -78,14 +90,16 @@ public class ConsoleStore {
 					int removeAmount = purchaseTracker.nextInt();
 					if (removal.equalsIgnoreCase("console")) {
 						wallet += (removeAmount * 500);
-						for (int i = 0; i < removeAmount; i++) {
-							consoleCart.remove(new Clothing());
-						}
+						// for (int i = 0; i < removeAmount; i++) {
+						consoleCart.remove(new Clothing(), removeAmount);
+						consolesBuy -= removeAmount;
+						// }
 					} else if (removal.equalsIgnoreCase("game")) {
 						wallet += (removeAmount * 60);
-						for (int i = 0; i < removeAmount; i++) {
-							games.remove(new Toy());
-						}
+						// for (int i = 0; i < removeAmount; i++) {
+						games.remove(new Toy(), removeAmount);
+						gamesBuy -= removeAmount;
+						// }
 					}
 				}
 			}
@@ -104,6 +118,10 @@ public class ConsoleStore {
 		System.out.println("You have $" + wallet + " remaining");
 		consoleCart.showCart();
 		games.showCart();
+		System.out.println("Receipt for " + name);
+		System.out.println(consolesBuy + " console(s)" + " $" + consolesBuy * 500);
+		System.out.println(gamesBuy + " game(s)" + " $" + gamesBuy * 60);
+		System.out.println("Total cost: $" + (consolesBuy * 500 + gamesBuy * 60));
 	}
 
 }
