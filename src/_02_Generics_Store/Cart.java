@@ -32,9 +32,18 @@ public class Cart<T extends NonFood> {
     }
     
     public void remove(T item, int removal) {
-    	for (int i = 0; i < removal; i++) {
-			if(cart[i] != null && cart[i].item.equals(item.item)) {
+    	for (int i = 0; i < cart.length; i++) {
+			if(removal > 0 && cart[i].item.equals(item.item)) {
 				cart[i] = null;
+				removal-=1;
+			}
+		}
+    }
+    public void remove(int removal) {
+    	for (int i = 0; i < cart.length; i++) {
+			if(removal > 0 && cart[i].item != null) {
+				cart[i] = null;
+				removal-=1;
 			}
 		}
     }

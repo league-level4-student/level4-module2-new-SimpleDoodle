@@ -50,26 +50,41 @@ public class ConsoleStore {
 		Cart<Clothing> consoleCart = new Cart<Clothing>();
 		Cart<Toy> games = new Cart<Toy>();
 		System.out.println("What is your name?");
-		String name = purchaseTracker.next();
+		String name = purchaseTracker.next().trim();
 		int consolesBuy = 0;
 		int gamesBuy = 0;
 		System.out.println("You have $" + wallet);
 		do {
-			System.out.println("A console is $500 and a game is $60, what would you like to purchase?");
-			String purchase = purchaseTracker.next();
+			System.out.println(
+					"An xbox and playstation are $500 each and zelda and mario kart are $60 each, what would you like to purchase?");
+			purchaseTracker.nextLine();
+			String purchase = purchaseTracker.nextLine();
+
 			System.out.println("How many " + purchase + "s would you like to purchase?");
 			int amount = purchaseTracker.nextInt();
-			if (purchase.equalsIgnoreCase("console")) {
+			if (purchase.equalsIgnoreCase("xbox")) {
 				wallet -= (amount * 500);
 				consolesBuy += amount;
 				for (int i = 0; i < amount; i++) {
-					consoleCart.add(new Clothing());
+					consoleCart.add(new Clothing("xbox.png"));
 				}
-			} else if (purchase.equalsIgnoreCase("game")) {
+			} else if (purchase.equalsIgnoreCase("playstation")) {
+				wallet -= (amount * 500);
+				consolesBuy += amount;
+				for (int i = 0; i < amount; i++) {
+					consoleCart.add(new Clothing("playstation.png"));
+				}
+			} else if (purchase.equalsIgnoreCase("zelda")) {
 				wallet -= (amount * 60);
 				gamesBuy += amount;
 				for (int i = 0; i < amount; i++) {
-					games.add(new Toy());
+					games.add(new Toy("TOTK.png"));
+				}
+			} else if (purchase.equalsIgnoreCase("mario kart")) {
+				wallet -= (amount * 60);
+				gamesBuy += amount;
+				for (int i = 0; i < amount; i++) {
+					games.add(new Toy("mariokart.jpg"));
 				}
 			}
 			System.out.println("Would you like to view your cart? Y/N?");
@@ -82,22 +97,35 @@ public class ConsoleStore {
 			}
 			if (consoleCart.length() > 0 || games.length() > 0 || overflow == true) {
 				System.out.println("Would you like to remove an item from your cart? Y/N?");
-				String removeItem = purchaseTracker.next();
+				purchaseTracker.nextLine();
+				String removeItem = purchaseTracker.nextLine();
 				if (removeItem.equalsIgnoreCase("Y")) {
-					System.out.println("Would you like to remove a console or a game?");
-					String removal = purchaseTracker.next();
+					System.out.println("Would you like to remove an xbox, playstation, zelda, or mario kart?");
+					String removal = purchaseTracker.nextLine();
 					System.out.println("How many " + removal + "s would you like to remove?");
 					int removeAmount = purchaseTracker.nextInt();
-					if (removal.equalsIgnoreCase("console")) {
+					if (removal.equalsIgnoreCase("xbox")) {
 						wallet += (removeAmount * 500);
 						// for (int i = 0; i < removeAmount; i++) {
-						consoleCart.remove(new Clothing(), removeAmount);
+						consoleCart.remove(new Clothing("xbox.png"), removeAmount);
 						consolesBuy -= removeAmount;
 						// }
-					} else if (removal.equalsIgnoreCase("game")) {
+					} else if (removal.equalsIgnoreCase("playstation")) {
+						wallet += (removeAmount * 500);
+						// for (int i = 0; i < removeAmount; i++) {
+						consoleCart.remove(new Clothing("playstation.png"), removeAmount);
+						consolesBuy -= removeAmount;
+						// }
+					} else if (removal.equalsIgnoreCase("zelda")) {
 						wallet += (removeAmount * 60);
 						// for (int i = 0; i < removeAmount; i++) {
-						games.remove(new Toy(), removeAmount);
+						games.remove(new Toy("TOTK.png"), removeAmount);
+						gamesBuy -= removeAmount;
+						// }
+					} else if (removal.equalsIgnoreCase("mario kart")) {
+						wallet += (removeAmount * 60);
+						// for (int i = 0; i < removeAmount; i++) {
+						games.remove(new Toy("mariokart.jpg"), removeAmount);
 						gamesBuy -= removeAmount;
 						// }
 					}

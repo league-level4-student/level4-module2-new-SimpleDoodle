@@ -7,11 +7,14 @@ import javax.swing.JLabel;
 public class Toy extends NonFood {
 	public Toy() {
 		if(new Random().nextBoolean()) {
-			this.item = "toy1.jpeg";
+			this.item = "TOTK.png";
 		}
 		else {
-			this.item = "toy2.jpeg";
+			this.item = "mariokart.jpg";
 		}
+	}
+	public Toy(String gameType) {
+		this.item = gameType;
 	}
 
 	@Override

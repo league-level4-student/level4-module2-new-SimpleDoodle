@@ -13,6 +13,10 @@ public class Clothing extends NonFood{
 			this.item = "xbox.png";
 		}
 	}
+	public Clothing(String consoleType) {
+		this.item = consoleType;
+	}
+	
 
 	@Override
 	public JLabel getNonFood() {
